@@ -1,6 +1,6 @@
 {
   "name": "react-native-smart-dropdown",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Production-ready, reusable React Native dropdown/select with smart positioning, search, and multi-select. Zero runtime dependencies.",
   "keywords": [
     "react-native",
