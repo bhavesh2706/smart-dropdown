@@ -4,7 +4,7 @@
 
 Production-ready React Native **dropdown / select** with **smart positioning**, **search**, **multi-select**, and a full theming system. **Zero runtime dependencies.** TypeScript-first.
 
-**[npm](https://www.npmjs.com/package/react-native-smart-dropdown) · [GitHub](https://github.com/bhavesh2706/SmartDropDown) · [Issues](https://github.com/bhavesh2706/SmartDropDown/issues) · [Interactive demo](example/DropdownDemo/README.md) · [Full video tour](https://youtu.be/ZrXf6GZ4fAI)**
+**[npm](https://www.npmjs.com/package/react-native-smart-dropdown) · [GitHub](https://github.com/bhavesh2706/smart-dropdown) · [Issues](https://github.com/bhavesh2706/smart-dropdown/issues) · [Interactive demo](example/DropdownDemo/README.md) · [Full video tour](https://youtu.be/ZrXf6GZ4fAI)**
 
 ## Preview
 
@@ -14,13 +14,13 @@ Highlights from the interactive demo on **Android** and **iOS**:
 
 | Selection (single + multi) | Multi-select · searchable | Inline + keyboard-aware |
 |:---:|:---:|:---:|
-| ![Single & multi-select](https://raw.githubusercontent.com/bhavesh2706/SmartDropDown/main/docs/assets/SmartDropdownDemo1.gif) | ![Searchable multi-select chips](https://raw.githubusercontent.com/bhavesh2706/SmartDropDown/main/docs/assets/SmartDropdownDemo2.gif) | ![Inline mode with search](https://raw.githubusercontent.com/bhavesh2706/SmartDropDown/main/docs/assets/SmartDropdownDemo3.gif) |
+| ![Single & multi-select](https://raw.githubusercontent.com/bhavesh2706/smart-dropdown/main/docs/assets/SmartDropdownDemo1.gif) | ![Searchable multi-select chips](https://raw.githubusercontent.com/bhavesh2706/smart-dropdown/main/docs/assets/SmartDropdownDemo2.gif) | ![Inline mode with search](https://raw.githubusercontent.com/bhavesh2706/smart-dropdown/main/docs/assets/SmartDropdownDemo3.gif) |
 
 ### iOS
 
 | Create new / taggable | Multi-select · searchable |
 |:---:|:---:|
-| ![Create new option on iOS](https://raw.githubusercontent.com/bhavesh2706/SmartDropDown/main/docs/assets/SmartDropdowniOSDemo1.gif) | ![Multi-select chips on iOS](https://raw.githubusercontent.com/bhavesh2706/SmartDropDown/main/docs/assets/SmartDropdowniOSDemo2.gif) |
+| ![Create new option on iOS](https://raw.githubusercontent.com/bhavesh2706/smart-dropdown/main/docs/assets/SmartDropdowniOSDemo1.gif) | ![Multi-select chips on iOS](https://raw.githubusercontent.com/bhavesh2706/smart-dropdown/main/docs/assets/SmartDropdowniOSDemo2.gif) |
 
 **[Watch all 32 demos on YouTube](https://youtu.be/ZrXf6GZ4fAI)** — full walkthrough of every feature in the demo app.
 

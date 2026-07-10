@@ -28,12 +28,12 @@
   "author": "Bhavesh Barot <bhaveshbarot2706@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bhavesh2706/SmartDropDown.git"
+    "url": "git+https://github.com/bhavesh2706/smart-dropdown.git"
   },
   "bugs": {
-    "url": "https://github.com/bhavesh2706/SmartDropDown/issues"
+    "url": "https://github.com/bhavesh2706/smart-dropdown/issues"
   },
-  "homepage": "https://github.com/bhavesh2706/SmartDropDown#readme",
+  "homepage": "https://github.com/bhavesh2706/smart-dropdown#readme",
   "source": "./src/index.ts",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
