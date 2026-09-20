@@ -1,23 +1,21 @@
 import React from 'react';
 import {
   TextInput,
-  type NativeSyntheticEvent,
   type StyleProp,
   type TextStyle,
-  type TextInputKeyPressEventData,
+  type TextInputInstance,
+  type TextInputKeyPressEvent,
 } from 'react-native';
 import { useTheme } from '../theme';
 
 export interface EditableInputProps {
   /** Forward ref (function form) to the underlying TextInput. */
-  inputRef?: (node: TextInput | null) => void;
+  inputRef?: (node: TextInputInstance | null) => void;
   value: string;
   onChangeText?: (text: string) => void;
   onFocus?: () => void;
   onBlur?: () => void;
-  onKeyPress?: (
-    e: NativeSyntheticEvent<TextInputKeyPressEventData>,
-  ) => void;
+  onKeyPress?: (e: TextInputKeyPressEvent) => void;
   placeholder?: string;
   editable?: boolean;
   autoFocus?: boolean;

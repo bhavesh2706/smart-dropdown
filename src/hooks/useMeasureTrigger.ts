@@ -1,5 +1,5 @@
 import { useCallback, useRef } from 'react';
-import type { View } from 'react-native';
+import type { ViewInstance } from 'react-native';
 import type { TriggerRect } from '../types';
 
 const ZERO_RECT: TriggerRect = { x: 0, y: 0, width: 0, height: 0 };
@@ -10,10 +10,10 @@ const ZERO_RECT: TriggerRect = { x: 0, y: 0, width: 0, height: 0 };
  * on the measured native view).
  */
 export function useMeasureTrigger(): {
-  ref: React.MutableRefObject<View | null>;
+  ref: React.MutableRefObject<ViewInstance | null>;
   measure: () => Promise<TriggerRect>;
 } {
-  const ref = useRef<View | null>(null);
+  const ref = useRef<ViewInstance | null>(null);
 
   const measure = useCallback((): Promise<TriggerRect> => {
     return new Promise((resolve) => {
@@ -31,7 +31,7 @@ export function useMeasureTrigger(): {
       };
 
       const attempt = (retriesLeft: number) => {
-        node.measureInWindow((x, y, width, height) => {
+        node.measureInWindow((x: number, y: number, width: number, height: number) => {
           const ok =
             typeof x === 'number' &&
             typeof y === 'number' &&

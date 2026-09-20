@@ -92,6 +92,14 @@ npx jest
 
 ---
 
+## Appearance (light / dark)
+
+The demo follows the **system color scheme**. Cards, titles, and StatusBar adapt so that when `DropdownSelect` uses the default `colorScheme="system"`, form labels (e.g. **19. Label · required · error**) stay visible on matching card backgrounds.
+
+Toggle device dark mode to verify contrast. The dedicated **Dark mode** card still forces `colorScheme="dark"` on a dark card.
+
+---
+
 ## Demo index
 
 Scroll through the app to try each feature. Card numbers are auto-generated in `App.tsx` (`N()`).

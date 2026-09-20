@@ -44,7 +44,7 @@ npm install react-native-smart-dropdown
 yarn add react-native-smart-dropdown
 ```
 
-Peer deps: `react >= 18`, `react-native >= 0.72`. **MIT license** · **90 tests** · **~75 kB** packed · **zero runtime dependencies**.
+Peer deps: `react >= 18`, `react-native >= 0.72`. Tested against **RN 0.87.1** / RN CLI **20.2.0**. **Expo SDK 57** still ships **RN 0.86.x**, so the library remains usable there via the peer range. **MIT license** · **90 tests** · **~75 kB** packed · **zero runtime dependencies**.
 
 ### Interactive demo (32 cards)
 
@@ -226,6 +226,11 @@ function Example() {
 />
 ```
 
+> **`colorScheme` and contrast:** Default is `'system'`, so label / helper / trigger follow the OS
+> light or dark palette. Put the dropdown on a matching surface (or set `colorScheme="light"` /
+> `"dark"` explicitly). Light label text on a light parent (or the reverse) will look “missing.”
+> Override with `labelStyle` / `helperTextStyle` / `theme.colors` when the host screen doesn’t match.
+
 > **Fonts on iOS:** iOS ignores `fontWeight` on a custom `fontFamily` — the weight is baked into the
 > font file. So set per-weight families (`Inter-Regular` / `Inter-Medium` / `Inter-Bold`) via
 > `theme.fonts`; the library never emits `fontWeight` alongside a custom family.
@@ -357,7 +362,7 @@ Every prop on `<DropdownSelect<T>>`, grouped. Optional unless marked **required*
 | Prop | Type | Default | Notes |
 |------|------|---------|-------|
 | `theme` | `DeepPartial<DropdownTheme>` | — | partial token override (see below) |
-| `colorScheme` | `'system' \| 'light' \| 'dark'` | `'system'` | base palette |
+| `colorScheme` | `'system' \| 'light' \| 'dark'` | `'system'` | base palette — match the parent surface (see theming note above) |
 | `rtl` | `boolean` | `I18nManager.isRTL` | mirror layout + right-align text |
 
 ### Positioning & sizing
@@ -514,6 +519,10 @@ ref.current?.open();
 
 Arrow ↑/↓ move the active row, Enter selects, Esc closes (while a search input is focused).
 Rows expose `accessibilityRole` / `accessibilityState`; web gets hover highlighting.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for setup, `tsc` / `jest`, device testing, and dark-mode contrast checks.
 
 ## License
 

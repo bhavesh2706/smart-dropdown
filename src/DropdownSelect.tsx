@@ -17,8 +17,8 @@ import {
   useColorScheme,
   useWindowDimensions,
   View as RNView,
-  type TextInput,
-  type View,
+  type TextInputInstance,
+  type ViewInstance,
 } from 'react-native';
 
 import type {
@@ -268,7 +268,7 @@ function DropdownSelectInner<T>(
   const [rect, setRect] = useState<TriggerRect | null>(null);
   const { ref: triggerRef, measure } = useMeasureTrigger();
   const panelRef = useRef<DropdownPanelHandle | null>(null);
-  const triggerInputRef = useRef<TextInput | null>(null);
+  const triggerInputRef = useRef<TextInputInstance | null>(null);
   // Fallback dimensions captured via the trigger's onLayout. Used when
   // measureInWindow returns zeros (Android quirk on the first measure).
   const triggerLayoutRef = useRef<{ width: number; height: number }>({
@@ -757,7 +757,7 @@ function DropdownSelectInner<T>(
   const useCustomTrigger = !!renderTrigger && !editableTrigger;
   const customTriggerNode = useCustomTrigger ? (
     <RNView
-      ref={triggerRef as React.Ref<View>}
+      ref={triggerRef as React.Ref<ViewInstance>}
       collapsable={false}
       onLayout={(e) => onMainTriggerLayout(e.nativeEvent.layout)}>
       {renderTrigger!({
@@ -968,7 +968,7 @@ function DropdownSelectInner<T>(
           customTriggerNode
         ) : (
         <Trigger<T>
-          ref={triggerRef as React.Ref<View>}
+          ref={triggerRef as React.Ref<ViewInstance>}
           {...sharedTriggerProps}
           editable={mainTriggerEditable}
           inputValue={mainTriggerEditable ? search.searchText : undefined}
@@ -1004,7 +1004,7 @@ function DropdownSelectInner<T>(
         customTriggerNode
       ) : (
       <Trigger<T>
-        ref={triggerRef as React.Ref<View>}
+        ref={triggerRef as React.Ref<ViewInstance>}
         {...sharedTriggerProps}
         onPress={editableTrigger ? () => void open() : toggle}
         onClear={clear}

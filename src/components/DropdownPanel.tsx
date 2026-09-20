@@ -11,7 +11,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   View,
   type FlatListProps,
   type StyleProp,
@@ -91,11 +90,7 @@ export interface DropdownPanelProps<T> {
   /** Keyboard-nav: index of the active (highlighted) item in `items`. */
   activeIndex?: number;
   /** Key events from the search input (keyboard navigation). */
-  onSearchKeyPress?: (
-    e: import('react-native').NativeSyntheticEvent<
-      import('react-native').TextInputKeyPressEventData
-    >,
-  ) => void;
+  onSearchKeyPress?: (e: import('react-native').TextInputKeyPressEvent) => void;
   highlightSelected: boolean;
   groupBy?: (item: T) => string;
   renderSectionHeader?: (group: string) => React.ReactNode;
@@ -172,7 +167,7 @@ function DropdownPanelInner<T>(
 
   const theme = useTheme();
   const styles = useMemo(() => makeStyles(theme), [theme]);
-  const inputRef = useRef<TextInput | null>(null);
+  const inputRef = useRef<import('react-native').TextInputInstance | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const listRef = useRef<FlatList<any> | null>(null);
 
@@ -435,7 +430,7 @@ function DropdownPanelInner<T>(
         scrollEventThrottle={200}
         onEndReached={onLoadMore}
         onEndReachedThreshold={0.3}
-        ListFooterComponent={footer}
+        ListFooterComponent={footer ?? undefined}
         renderItem={({ item }) => renderEntry(item)}
         {...(listProps as object)}
       />
@@ -469,7 +464,7 @@ function DropdownPanelInner<T>(
       }}
       onEndReached={onLoadMore}
       onEndReachedThreshold={0.3}
-      ListFooterComponent={footer}
+      ListFooterComponent={footer ?? undefined}
       renderItem={({ item }) => renderEntry(item)}
       {...(listProps as object)}
     />

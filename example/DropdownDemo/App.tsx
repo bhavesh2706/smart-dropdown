@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 import {
   ScrollView,
   StatusBar,
@@ -8,6 +8,7 @@ import {
   View,
   Alert,
   LogBox,
+  useColorScheme,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
@@ -83,14 +84,19 @@ function Demo({
   title: string;
   desc: string;
   children: React.ReactNode;
+  /** Force a dark card (e.g. colorScheme="dark" demo). Also auto when OS is dark. */
   dark?: boolean;
 }) {
+  // Match card chrome to OS appearance. Default colorScheme="system" paints
+  // label/helper with dark-theme text; a light card made those labels invisible.
+  const systemDark = useColorScheme() === 'dark';
+  const onDark = dark || systemDark;
   return (
-    <View style={[styles.section, dark && styles.sectionDark]}>
-      <Text style={[styles.sectionTitle, dark && styles.textOnDark]}>
+    <View style={[styles.section, onDark && styles.sectionDark]}>
+      <Text style={[styles.sectionTitle, onDark && styles.textOnDark]}>
         {n}. {title}
       </Text>
-      <Text style={[styles.sectionDesc, dark && styles.descOnDark]}>{desc}</Text>
+      <Text style={[styles.sectionDesc, onDark && styles.descOnDark]}>{desc}</Text>
       {children}
     </View>
   );
@@ -100,6 +106,24 @@ function App(): React.JSX.Element {
   // Auto-incrementing demo number so cards can be reordered freely.
   let step = 0;
   const N = () => ++step;
+
+  const isDark = useColorScheme() === 'dark';
+  const chrome = useMemo(
+    () => ({
+      root: [styles.root, isDark && styles.rootDark],
+      title: [styles.title, isDark && styles.textOnDark],
+      subtitle: [styles.subtitle, isDark && styles.descOnDark],
+      group: [styles.group, isDark && styles.groupDark],
+      helper: [styles.helper, isDark && styles.descOnDark],
+      customRowText: [styles.customRowText, isDark && styles.textOnDark],
+      sectionHeader: [styles.sectionHeader, isDark && styles.sectionHeaderDark],
+      sectionHeaderText: [
+        styles.sectionHeaderText,
+        isDark && styles.sectionHeaderTextDark,
+      ],
+    }),
+    [isDark],
+  );
 
   const scrollRef = useRef<ScrollView>(null);
   const imperativeRef = useRef<DropdownRef>(null);
@@ -126,8 +150,11 @@ function App(): React.JSX.Element {
   const [ctrlOpen, setCtrlOpen] = useState(false);
 
   return (
-    <SafeAreaView style={styles.root}>
-      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+    <SafeAreaView style={chrome.root}>
+      <StatusBar
+        barStyle={isDark ? 'light-content' : 'dark-content'}
+        backgroundColor={isDark ? '#000' : '#fff'}
+      />
       <ScrollView
         ref={scrollRef}
         contentContainerStyle={styles.container}
@@ -136,13 +163,13 @@ function App(): React.JSX.Element {
         // passing through the open dropdown closes it; a host scroll closes it too.
         onTouchStart={markUserTap}
         onScrollBeginDrag={closeOpenDropdowns}>
-        <Text style={styles.title}>react-native-smart-dropdown</Text>
-        <Text style={styles.subtitle}>
+        <Text style={chrome.title}>react-native-smart-dropdown</Text>
+        <Text style={chrome.subtitle}>
           One demo per feature · zero runtime deps
         </Text>
 
         {/* ───────── Selection ───────── */}
-        <Text style={styles.group}>SELECTION</Text>
+        <Text style={chrome.group}>SELECTION</Text>
 
         <Demo n={N()} title="Single select" desc="Basic controlled single select.">
           <DropdownSelect<Fruit>
@@ -154,7 +181,7 @@ function App(): React.JSX.Element {
             placeholder="Pick a fruit"
             testID="dd-single"
           />
-          <Text style={styles.helper}>
+          <Text style={chrome.helper}>
             Selected: {single ? single.label : '(none)'}
           </Text>
         </Demo>
@@ -209,7 +236,7 @@ function App(): React.JSX.Element {
             placeholder="Open → Select all"
             testID="dd-selectall"
           />
-          <Text style={styles.helper}>{selectAllSel.length} selected</Text>
+          <Text style={chrome.helper}>{selectAllSel.length} selected</Text>
         </Demo>
 
         <Demo
@@ -267,7 +294,7 @@ function App(): React.JSX.Element {
         </Demo>
 
         {/* ───────── Search ───────── */}
-        <Text style={styles.group}>SEARCH</Text>
+        <Text style={chrome.group}>SEARCH</Text>
 
         <Demo
           n={N()}
@@ -430,7 +457,7 @@ function App(): React.JSX.Element {
         </Demo>
 
         {/* ───────── List content ───────── */}
-        <Text style={styles.group}>LIST CONTENT</Text>
+        <Text style={chrome.group}>LIST CONTENT</Text>
 
         <Demo
           n={N()}
@@ -443,8 +470,8 @@ function App(): React.JSX.Element {
             valueKey="id"
             groupBy={f => f.label[0]}
             renderSectionHeader={g => (
-              <View style={styles.sectionHeader}>
-                <Text style={styles.sectionHeaderText}>{g} —</Text>
+              <View style={chrome.sectionHeader}>
+                <Text style={chrome.sectionHeaderText}>{g} —</Text>
               </View>
             )}
             placeholder="Grouped by letter"
@@ -500,7 +527,7 @@ function App(): React.JSX.Element {
                     {backgroundColor: isSelected ? '#0a7' : '#bbb'},
                   ]}
                 />
-                <Text style={styles.customRowText}>{item.label}</Text>
+                <Text style={chrome.customRowText}>{item.label}</Text>
                 {isSelected ? <Text style={styles.check}>✓</Text> : null}
               </TouchableOpacity>
             )}
@@ -510,7 +537,7 @@ function App(): React.JSX.Element {
         </Demo>
 
         {/* ───────── Form ───────── */}
-        <Text style={styles.group}>FORM FIELD</Text>
+        <Text style={chrome.group}>FORM FIELD</Text>
 
         <Demo
           n={N()}
@@ -533,7 +560,7 @@ function App(): React.JSX.Element {
         </Demo>
 
         {/* ───────── Theming ───────── */}
-        <Text style={styles.group}>THEMING & ICONS</Text>
+        <Text style={chrome.group}>THEMING & ICONS</Text>
 
         <Demo
           n={N()}
@@ -613,7 +640,7 @@ function App(): React.JSX.Element {
         </Demo>
 
         {/* ───────── Positioning & render ───────── */}
-        <Text style={styles.group}>POSITIONING & RENDER</Text>
+        <Text style={chrome.group}>POSITIONING & RENDER</Text>
 
         <Demo
           n={N()}
@@ -755,7 +782,7 @@ function App(): React.JSX.Element {
         </Demo>
 
         {/* ───────── States ───────── */}
-        <Text style={styles.group}>STATES</Text>
+        <Text style={chrome.group}>STATES</Text>
 
         <Demo
           n={N()}
@@ -782,6 +809,7 @@ function App(): React.JSX.Element {
 
 const styles = StyleSheet.create({
   root: {flex: 1, backgroundColor: '#F4F6F8'},
+  rootDark: {backgroundColor: '#000'},
   container: {padding: 16},
   title: {fontSize: 22, fontWeight: '700', color: '#111'},
   subtitle: {fontSize: 13, color: '#666', marginBottom: 8},
@@ -793,6 +821,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     marginBottom: 6,
   },
+  groupDark: {color: '#8E8E93'},
   section: {
     backgroundColor: '#fff',
     padding: 12,
@@ -842,7 +871,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 6,
   },
+  sectionHeaderDark: {backgroundColor: '#2C2C2E'},
   sectionHeaderText: {fontSize: 12, fontWeight: '700', color: '#55c'},
+  sectionHeaderTextDark: {color: '#A5B4FC'},
 });
 
 export default App;

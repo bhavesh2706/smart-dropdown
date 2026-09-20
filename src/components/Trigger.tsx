@@ -3,13 +3,13 @@ import {
   Pressable,
   StyleSheet,
   Text,
-  TextInput,
   View,
   type LayoutChangeEvent,
-  type NativeSyntheticEvent,
   type StyleProp,
   type TextStyle,
-  type TextInputKeyPressEventData,
+  type TextInputInstance,
+  type TextInputKeyPressEvent,
+  type ViewInstance,
   type ViewStyle,
 } from 'react-native';
 import type {AccessoryParams} from '../types';
@@ -79,11 +79,9 @@ export interface TriggerProps<T> {
   /** Called when the editable TextInput loses focus. */
   onInputBlur?: () => void;
   /** Key events from the editable input (keyboard navigation). */
-  onInputKeyPress?: (
-    e: NativeSyntheticEvent<TextInputKeyPressEventData>,
-  ) => void;
+  onInputKeyPress?: (e: TextInputKeyPressEvent) => void;
   /** Forward ref to the TextInput (so the parent can focus/blur it). */
-  inputRef?: React.Ref<TextInput>;
+  inputRef?: React.Ref<TextInputInstance>;
   /** When true (and editable=true), the TextInput auto-focuses on mount. */
   autoFocusInput?: boolean;
 
@@ -103,7 +101,7 @@ function defaultClear(styles: Styles) {
   return <Text style={styles.clear}>{'✕'}</Text>;
 }
 
-function TriggerInner<T>(props: TriggerProps<T>, ref: React.Ref<View>) {
+function TriggerInner<T>(props: TriggerProps<T>, ref: React.Ref<ViewInstance>) {
   const {
     label,
     placeholder,
@@ -156,7 +154,7 @@ function TriggerInner<T>(props: TriggerProps<T>, ref: React.Ref<View>) {
 
   const theme = useTheme();
   const styles = useMemo(() => makeStyles(theme), [theme]);
-  const localInputRef = useRef<TextInput | null>(null);
+  const localInputRef = useRef<TextInputInstance | null>(null);
   const [focused, setFocused] = useState(false);
 
   const accessoryParams: AccessoryParams<T> = {
@@ -177,12 +175,12 @@ function TriggerInner<T>(props: TriggerProps<T>, ref: React.Ref<View>) {
     }
   };
 
-  const assignInputRef = (node: TextInput | null) => {
+  const assignInputRef = (node: TextInputInstance | null) => {
     localInputRef.current = node;
     if (typeof inputRef === 'function') {
       inputRef(node);
     } else if (inputRef && 'current' in inputRef) {
-      (inputRef as React.MutableRefObject<TextInput | null>).current = node;
+      (inputRef as React.MutableRefObject<TextInputInstance | null>).current = node;
     }
   };
 
@@ -340,7 +338,7 @@ function TriggerInner<T>(props: TriggerProps<T>, ref: React.Ref<View>) {
 
 // Allow generic forwardRef
 export const Trigger = forwardRef(TriggerInner) as <T>(
-  props: TriggerProps<T> & {ref?: React.Ref<View>},
+  props: TriggerProps<T> & {ref?: React.Ref<ViewInstance>},
 ) => React.ReactElement;
 
 const makeStyles = (t: DropdownTheme) =>
