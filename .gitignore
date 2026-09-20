@@ -62,3 +62,10 @@ example/DropdownDemo/**/*.apk
 example/DropdownDemo/**/*.aab
 
 # NOTE: docs/assets/*.gif are README previews (Android + iOS) — commit them (do not ignore docs/)
+
+# Local agent / working-memory docs — keep out of git and away from end users
+.claude/
+CLAUDE.md
+PROJECT_STATE.md
+AGENTS.md
+*.pdf
